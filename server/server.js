@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: true, // frontend origin
+    origin: "https://your-vercel-project.vercel.app", // frontend origin
     credentials: true,
   })
 );
