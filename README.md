@@ -12,6 +12,8 @@ An AI-Powered chat application designed to provide compassionate emotional suppo
 
 ## Screenshot
 
+![Demo of AI Companion application](image.png)
+
 ## Tech Stack
 
 - **Frontend:** React, Manual CSS
@@ -76,7 +78,7 @@ Create a .env file in /server folder with:
 
 ```bash
 # Backend
-npm run dev
+nodemon server.js
 
 # Frontend (in /client)
 cd ../client
