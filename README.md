@@ -1,137 +1,91 @@
-🧱 1. Project Setup
-Goal: Prepare your Node.js backend project.
+# What is AI Companion App
 
-Initialize project:
+An AI-Powered chat application designed to provide compassionate emotional support. Built with React, Express, PostgreSQL, and OpenAI API. This full stack application allow user to create account and maintain multiple conversation with AI assistant.
 
-bash
-Copy
-Edit
-mkdir gpt-backend && cd gpt-backend
-npm init -y
-Install essentials:
+# Feature list
 
-bash
-Copy
-Edit
-npm install express dotenv pg cors
-npm install bcrypt passport passport-local express-session
-npm install openai  # for GPT API access
-npm install nodemon --save-dev
-File structure (minimal to start):
+- GPT-4 integration with prompt engineering techniques
+- User authentication using Passport.js and brcrypt)
+- Support multiple chat session per user
+- Dynamic title generated from user input
+- Delete chat by user selection
 
-pgsql
-Copy
-Edit
-gpt-backend/
-├── db/
-│   └── index.js
-├── models/
-│   └── user.js
-│   └── chat.js
-├── routes/
-│   └── auth.js
-│   └── chat.js
-├── config/
-│   └── passport.js
-├── .env
-├── server.js
-└── package.json
-🧑‍💻 2. Set up PostgreSQL Database
-Goal: Define schema to support users and chat tabs.
+## Screenshot
 
-sql
-Copy
-Edit
--- users table
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  email TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL
-);
+## Tech Stack
 
--- chats table
-CREATE TABLE chats (
-  id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  title TEXT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+- **Frontend:** React, Manual CSS
+- **Backend:** Node.js, Express
+- **Database:** PostgreSQL
+- **Auth:** Passport.js, bcrypt
+- **API:** OpenAI GPT-4
 
--- messages table
-CREATE TABLE messages (
-  id SERIAL PRIMARY KEY,
-  chat_id INTEGER REFERENCES chats(id) ON DELETE CASCADE,
-  role TEXT CHECK (role IN ('user', 'assistant')),
-  content TEXT NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-🔒 3. Authentication Flow
-Goal: Use passport-local with bcrypt to register/login users securely.
+## Quick Start
 
-bcrypt logic (inside models/user.js)
-Hash password on registration
+### 1. Clone the repo
 
-Compare password on login
+```bash
+git clone https://github.com/HuyGHuynh/ai-companion-chat.git
+cd gpt-companion
+```
 
-passport.js (inside config/passport.js)
-Set up local strategy using passport.use(...).
+### 2. Install dependencies
 
-📬 4. Auth Routes
-Goal: Create auth endpoints
+```bash
+cd client
+npm install
+cd ../server
+npm install
+```
 
-POST /api/auth/register: register with hashed password
+### 3. Setup Environment Variables
 
-POST /api/auth/login: login with passport
+Create a `.env` file in /server folder with:
 
-GET /api/auth/logout: logout session
+```bash
+DB_USER=your_db_user
+DB_PASS=your_db_password
+DB_NAME=companion
+DB_HOST=localhost
+DB_PORT=5432
+PORT=5000
+SESSION_SECRET=your_session_secret
 
-GET /api/auth/me: get current user (for frontend to know who’s logged in)
+```
 
-Use express-session to store session info.
+### 4. Setup the Database
 
-💬 5. Chat Routes
-Goal: Support chat tab management per user
+Make sure PostgreSQL is installed and running.
 
-GET /api/chats: get all chats for logged-in user
+1. Create a database:
 
-POST /api/chats: create new chat tab (title = first user message)
+```bash
+createdb companion
+```
 
-GET /api/chats/:id: get messages from one chat tab
+2. Run the SQL schema to set up tables:
 
-POST /api/chats/:id/message: send new message, call GPT API, and store response
+```bash
+cd server
+psql -d companion -f schema.sql
+```
 
-🤖 6. Connect to GPT
-Goal: Call GPT API and return the assistant's reply.
+### 5. Start the development servers
 
-Use the OpenAI SDK in chat.js route like:
+Create a .env file in /server folder with:
 
-js
-Copy
-Edit
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+```bash
+# Backend
+npm run dev
 
-const response = await openai.chat.completions.create({
-  model: 'gpt-4',
-  messages: historyMessages,
-});
-🧪 7. Test Your Backend
-Use Postman or Thunder Client to test:
+# Frontend (in /client)
+cd ../client
+npm run dev
+```
 
-Register/login/logout
+The frontend will run on http://localhost:5173
 
-Create a chat
+## Future scope
 
-Add user message
-
-Get assistant response
-
-✅ 8. Security and Production Notes
-Sanitize inputs
-
-Use helmet / rate limiter if public
-
-Store secrets in .env
-
-Use HTTPS in deployment
-
-Would you like to start implementing any specific part? (e.g., Passport setup, DB connection, or GPT route?)
+- Journaling companion mode
+- CI/CD deployment (AWS, Vercel, etc.)
