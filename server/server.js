@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: "https://your-vercel-project.vercel.app", // frontend origin
+    origin: "https://ai-companion-chat-swart.vercel.app", // frontend origin
     credentials: true,
   })
 );
