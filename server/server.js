@@ -21,6 +21,12 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: true, // IMPORTANT: set true for HTTPS (like Render)
+      sameSite: "None", // IMPORTANT: required for cross-origin cookies
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    },
   })
 );
 //Load passport config
