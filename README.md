@@ -2,6 +2,8 @@
 
 An AI-Powered chat application designed to provide compassionate emotional support. Built with React, Express, PostgreSQL, and OpenAI API. This full stack application allow user to create account and maintain multiple conversation with AI assistant.
 
+Live demo can be accessed here: https://ai-companion-chat-swart.vercel.app
+
 # Feature list
 
 - GPT-4 integration with prompt engineering techniques
